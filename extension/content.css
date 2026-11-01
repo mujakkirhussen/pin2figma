@@ -1,0 +1,16 @@
+#p2f-btn {
+  position: fixed;
+  z-index: 2147483647;
+  display: none;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: #0d99ff;
+  color: #fff;
+  font: 600 13px/1 -apple-system, system-ui, sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+#p2f-btn:hover { background: #007be5; }
+#p2f-btn.ok { background: #14ae5c; }
+#p2f-btn.err { background: #f24822; }

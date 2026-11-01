@@ -1,0 +1,5 @@
+.DS_Store
+Thumbs.db
+server/server.log
+__pycache__/
+*.pyc

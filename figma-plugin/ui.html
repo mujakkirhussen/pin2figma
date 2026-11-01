@@ -1,0 +1,166 @@
+<style>
+  :root {
+    --bg: #f7f6f4;
+    --card: #ffffff;
+    --ink: #1a1a19;
+    --muted: #8b8985;
+    --line: #e7e5e1;
+    --pill: #e9e8e6;
+    --ok: #14ae5c;
+    --err: #e5484d;
+    --accent: #0d99ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; height: 100vh; display: flex; flex-direction: column;
+    background: var(--bg); color: var(--ink);
+    font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); background: var(--bg); }
+  .logo { width: 28px; height: 28px; }
+  .logo svg { width: 28px; height: 28px; display: block; }
+  .name { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; flex: 1; }
+
+  .status {
+    display: flex; align-items: center; gap: 10px; padding: 11px 16px;
+    border-bottom: 1px solid var(--line);
+    background: #f4fbf6; color: #2fae5f; font-size: 13px; font-weight: 500;
+  }
+  .status svg { width: 18px; height: 18px; flex: none; }
+  .status .label { flex: 1; }
+  .status .mark { width: 16px; height: 16px; }
+  .status.off { background: #fff5f5; color: var(--err); }
+  .status .ok-only, .status.off .err-only { display: inline; }
+  .status.off .ok-only, .status .err-only { display: none; }
+
+  main {
+    flex: 1; min-height: 0; padding: 14px;
+    background-color: var(--bg);
+    background-image: radial-gradient(#d9d7d3 1px, transparent 1.2px);
+    background-size: 14px 14px;
+  }
+  .card { height: 100%; display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; padding: 14px 16px 10px; border-bottom: 1px solid var(--line); }
+  .card-head h2 { margin: 0; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+  .count { font-size: 12px; color: var(--muted); }
+
+  ol { list-style: none; margin: 0; padding: 8px 16px; flex: 1; overflow: hidden; }
+  li { display: flex; gap: 10px; padding: 6px 0; color: var(--muted); font-size: 13px; }
+  li .n { width: 18px; font-variant-numeric: tabular-nums; }
+  li:first-child { color: var(--ink); font-weight: 600; }
+
+  .empty { padding: 18px 16px; color: var(--muted); font-size: 12.5px; line-height: 1.55; }
+  .empty b { color: var(--ink); font-weight: 600; }
+  .error { margin: 0 16px 12px; color: var(--err); font-size: 12px; white-space: pre-wrap; }
+
+  footer { padding: 10px 16px 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; background: var(--bg); }
+  footer a { color: var(--ink); font-weight: 600; text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+</style>
+
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2eb0ff"/><stop offset="1" stop-color="#0a7de0"/></linearGradient></defs>
+  <rect width="128" height="128" rx="30" fill="url(#lg)"/>
+  <rect x="26" y="26" width="52" height="64" rx="8" fill="#fff" fill-opacity=".55" transform="rotate(12 64 64)"/>
+  <rect x="50" y="26" width="52" height="64" rx="8" fill="#fff" fill-opacity=".75" transform="rotate(-9 64 64)"/>
+  <rect x="38" y="22" width="52" height="66" rx="9" fill="#fff"/>
+  <circle cx="51.5" cy="51.2" r="3.9" fill="#0a7de0"/>
+  <path d="M45 69.4 58 55.1 67.1 64.2 72.3 59 81.4 69.4Z" fill="#0a7de0"/>
+  <circle cx="94" cy="94" r="25" fill="#148ceb"/>
+  <circle cx="94" cy="94" r="21" fill="#083870"/>
+  <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M85 94h18"/><path d="M96 86l8 8-8 8"/></g>
+    </svg>
+  </div>
+  <div class="name">Pin to Figma</div>
+</header>
+
+<div id="status" class="status off">
+  <svg class="ok-only" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 12 12 8"/><path d="M9.2 5.8l.9-.9a3 3 0 0 1 4.2 4.2l-.9.9"/><path d="M10.8 14.2l-.9.9a3 3 0 0 1-4.2-4.2l.9-.9"/>
+  </svg>
+  <svg class="err-only" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="10" cy="10" r="7"/><path d="M10 6.5v4"/><path d="M10 13.5h.01"/>
+  </svg>
+  <span class="label" id="statusText">Connecting…</span>
+  <svg class="mark ok-only" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 6.5 12 13 4.5"/></svg>
+</div>
+
+<main>
+  <div class="card">
+    <div class="card-head">
+      <h2>Recent pins</h2>
+      <span class="count" id="count">0 placed</span>
+    </div>
+    <div id="body"></div>
+  </div>
+</main>
+
+<footer>Made by <a href="https://x.com/madebymujakkir" target="_blank" rel="noopener">@madebymujakkir</a> on X</footer>
+
+<script>
+const statusEl = document.getElementById("status");
+const statusText = document.getElementById("statusText");
+const countEl = document.getElementById("count");
+const body = document.getElementById("body");
+
+let connected = false, received = 0, placed = 0, lastError = "";
+const recent = []; // newest first
+
+function render() {
+  statusEl.className = "status" + (connected ? "" : " off");
+  statusText.textContent = connected ? "Connected · listening for pins" : "Server off";
+  countEl.textContent = placed + " placed";
+
+  let html = "";
+  if (!connected) {
+    html = '<div class="empty"><b>Server is not running.</b><br>Run <b>install.sh</b> (Mac) or <b>install-windows.bat</b> once, or start server.py.</div>';
+  } else if (!recent.length) {
+    html = '<div class="empty">On Pinterest, hover a pin and click <b>→ Figma</b>. It lands on this page at once.</div>';
+  } else {
+    html = "<ol>" + recent.map((r) =>
+      '<li><span class="n">' + r.n + '.</span><span>' + r.w + " × " + r.h + " px</span></li>"
+    ).join("") + "</ol>";
+  }
+  if (lastError) html += '<div class="error">' + lastError.replace(/</g, "&lt;") + "</div>";
+  body.innerHTML = html;
+}
+
+async function poll() {
+  try {
+    const items = await (await fetch("http://localhost:3737/queue")).json();
+    connected = true;
+    for (const it of items) {
+      const bin = atob(it.data);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      received++;
+      parent.postMessage({ pluginMessage: { type: "pin", bytes, pin: it.pin, w: it.w } }, "*");
+    }
+  } catch (e) {
+    connected = false;
+  }
+  render();
+}
+
+onmessage = (e) => {
+  const m = e.data && e.data.pluginMessage;
+  if (!m || m.type !== "result") return;
+  if (m.ok) {
+    placed++;
+    recent.unshift({ n: m.n, w: m.w, h: m.h });
+    if (recent.length > 6) recent.pop();
+    lastError = "";
+  } else {
+    lastError = m.error;
+  }
+  render();
+};
+
+render();
+setInterval(poll, 1000);
+poll();
+</script>
