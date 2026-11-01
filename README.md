@@ -2,6 +2,10 @@
 
 ![Pin to Figma](logo/logo-512.png)
 
+![Demo: click a Pinterest pin, it lands in Figma](docs/demo.gif)
+
+[Watch the 28 second demo with captions](docs/demo.mp4)
+
 Click a pin on Pinterest, and the image lands on your Figma canvas. No more copy and paste, one image at a time.
 
 - Adds a **→ Figma** button on every Pinterest pin
