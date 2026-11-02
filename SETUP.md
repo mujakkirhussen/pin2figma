@@ -57,8 +57,23 @@ copy is running, which is fine.
 
 ## 5. The two steps only the user can do
 
-You cannot click inside Chrome or Figma. Give the user the exact absolute paths, which
-you can print with `pwd` (macOS) or `cd` (Windows), and walk them through:
+You cannot click inside Chrome or Figma, so the user has to pick two things from a file
+dialog. Make that easy for them, in this order:
+
+1. **Find the project folder's full path** (macOS: `pwd` inside the folder; Windows: `cd`)
+   and print the two exact paths the user will need, each on its own line in a code block:
+   - the **extension folder**: `<project>/extension` (Windows: `<project>\extension`)
+   - the **plugin manifest file**: `<project>/figma-plugin/manifest.json`
+2. **Open the project folder for them** so they can see it, and say you are doing it:
+   macOS `open "<project>"`, Windows `explorer "<project>"`. It contains the folders
+   `extension` and `figma-plugin`.
+3. Tell them plainly which one goes where: the **`extension` folder** is for Chrome, and the
+   **`manifest.json` file inside `figma-plugin`** is for Figma. In Chrome's picker they select the
+   folder itself, not a file inside it.
+4. Repeat the two paths again at the very end of your final message, so they can find them
+   without scrolling. If they ask, copy one to the clipboard (macOS `pbcopy`, Windows `clip`).
+
+Then walk them through the two steps:
 
 **Chrome extension**
 1. Open `chrome://extensions` and switch **Developer mode** on (top right).
